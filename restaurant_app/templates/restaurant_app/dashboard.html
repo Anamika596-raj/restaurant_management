@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        .icon {
+            font-size: 45px;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .label {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .recent {
+            background: white;
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        .recent h2 {
+            text-align: center;
+        }
+
+        .order {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 5px;
+        }
+
+        .order:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 35px auto;
+            padding: 12px 25px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📊 Restaurant Dashboard</h1>
+    <p>Restaurant Management System</p>
+</header>
+
+<div class="container">
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">📦</div>
+            <div class="number">{{ total_orders }}</div>
+            <div class="label">Total Orders</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">🍽️</div>
+            <div class="number">{{ total_menu_items }}</div>
+            <div class="label">Menu Items</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">⏳</div>
+            <div class="number">{{ pending_orders }}</div>
+            <div class="label">Pending Orders</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">👨‍🍳</div>
+            <div class="number">{{ preparing_orders }}</div>
+            <div class="label">Preparing Orders</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">✅</div>
+            <div class="number">{{ delivered_orders }}</div>
+            <div class="label">Delivered Orders</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">💰</div>
+            <div class="number">₹{{ total_sales }}</div>
+            <div class="label">Total Sales</div>
+        </div>
+
+    </div>
+
+
+    <div class="recent">
+
+        <h2>📋 Recent Orders</h2>
+
+        {% for order in recent_orders %}
+
+        <div class="order">
+
+            <h3>🍽️ {{ order.item.name }}</h3>
+
+            <p>
+                <strong>Customer:</strong>
+                {{ order.customer_name }}
+            </p>
+
+            <p>
+                <strong>Quantity:</strong>
+                {{ order.quantity }}
+            </p>
+
+            <p>
+                <strong>Total:</strong>
+                ₹{% widthratio order.item.price 1 order.quantity %}
+            </p>
+
+            <p class="status">
+                <strong>Status:</strong>
+                {{ order.status }}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                {{ order.order_date }}
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <p style="text-align:center;">
+            No orders available.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <a class="back" href="/">
+        ← Back to Restaurant
+    </a>
+
+</div>
+
+</body>
+</html>

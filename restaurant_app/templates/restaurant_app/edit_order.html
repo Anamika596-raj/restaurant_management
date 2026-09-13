@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Order</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #222;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>✏️ Edit Order</h1>
+    <p>Update your order quantity</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>{{ order.item.name }}</h2>
+
+        <p>Customer: {{ order.customer_name }}</p>
+
+        <p>Price per item: ₹{{ order.item.price }}</p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                name="quantity"
+                value="{{ order.quantity }}"
+                min="1"
+                required
+            >
+
+            <button type="submit">
+                💾 Update Order
+            </button>
+
+        </form>
+
+        <a class="back" href="/orders/?customer_name={{ order.customer_name }}">
+            ← Back to My Orders
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

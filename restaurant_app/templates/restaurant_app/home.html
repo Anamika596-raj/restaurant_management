@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Restaurant</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        .food {
+            font-size: 70px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .order-box {
+            background: white;
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .info {
+            background: white;
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>🍽️ My Restaurant</h1>
+
+    <p>Fresh Food • Great Taste • Happy Customers</p>
+
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="/orders/">📋 My Orders</a>
+        <a href="/dashboard/">📊 Dashboard</a>
+        <a href="/admin/">👨‍💼 Admin</a>
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+    {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endif %}
+
+
+    <h2>🍴 Our Menu</h2>
+
+    <div class="menu">
+
+        {% for item in menu_items %}
+
+        <div class="card">
+
+            {% if item.name == "Paneer Butter Masala" %}
+                <div class="food">🍛</div>
+
+            {% elif item.name == "Veg Biryani" %}
+                <div class="food">🍚</div>
+
+            {% elif item.name == "Masala Dosa" %}
+                <div class="food">🥞</div>
+
+            {% elif item.name == "veg manchrian" %}
+                <div class="food">🥗</div>
+
+            {% elif item.name == "chole bhature" %}
+                <div class="food">🍲</div>
+
+            {% else %}
+                <div class="food">🍽️</div>
+            {% endif %}
+
+            <h3>{{ item.name }}</h3>
+
+            <p>{{ item.description }}</p>
+
+            <p class="price">₹{{ item.price }}</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="order-box">
+
+        <h2>📝 Place Your Order</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Customer Name</label>
+
+            <input
+                type="text"
+                name="customer_name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>Select Food</label>
+
+            <select name="item" required>
+
+                <option value="">-- Select Item --</option>
+
+                {% for item in menu_items %}
+                    <option value="{{ item.id }}">
+                        {{ item.name }} - ₹{{ item.price }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                name="quantity"
+                min="1"
+                value="1"
+                required
+            >
+
+            <button type="submit">
+                🍽️ Place Order
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="info">
+
+        <h2>📖 About Us</h2>
+
+        <p>
+            Welcome to My Restaurant! We provide fresh, delicious and
+            high-quality food for our customers.
+        </p>
+
+        <h2>📞 Contact Us</h2>
+
+        <p>
+            Email: myrestaurant@example.com
+        </p>
+
+        <p>
+            Phone: +91 8789749372
+        </p>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <p>© 2026 My Restaurant | Restaurant Management System</p>
+
+</footer>
+
+</body>
+</html>s
